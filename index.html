@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Rock-Paper-Scissors</title>
+</head>
+<body>
+    <script>
+        const MIN = 0
+        const MAX = 3
+        const SYMBOLS = ["Rock", "Paper", "Scissors"]
+        let playerScore = 0
+        let computerScore = 0
+
+        // chooses a random symbol for the computer and returns it
+        function computerPlay(min, max) {
+            rndm = Math.floor(Math.random() * max) + min
+            return SYMBOLS[rndm]
+        }
+
+        // compares the player's and computer's selection and returns
+        // a string with the result of the round
+        function playRound(playerSelection, computerSelection) {
+            if (playerSelection === "Rock") {
+                if (computerSelection === "Scissors") {
+                    playerScore++
+                    return "You win! Rock beats Scissors."
+                } else if (computerSelection === "Paper") {
+                    computerScore++
+                    return "You lose! Paper beats Rock."
+                } else {
+                    return "It's a draw! Rock vs Rock."
+                }
+            }
+            if (playerSelection === "Paper") {
+                if (computerSelection === "Scissors") {
+                    computerScore++
+                    return "You lose! Scissors beats Paper."
+                } else if (computerSelection === "Paper") {
+                    return "It's a draw! Paper vs Paper."
+                } else {
+                    playerScore++
+                    return "You win! Paper beats Rock."
+                }
+            }
+            if (playerSelection === "Scissors") {
+                if (computerSelection === "Scissors") {
+                    return "It's a draw! Scissors vs Scissors."
+                } else if (computerSelection === "Paper") {
+                    playerScore++
+                    return "You win! Scissors beats Paper."
+                } else {
+                    computerScore++
+                    return "You lose! Rock beats Scissors."
+                }
+            }
+        }
+
+        // runs a game of 5 rounds, reports score and winner at the end
+        function game(rounds=5) {
+            let i = 1
+
+            while (rounds > 0) {
+                playerSelection = ""
+                while (!SYMBOLS.includes(playerSelection)) {
+                    // get player input via prompt
+                    playerSelection = prompt("Round " + i + ":\nRock, Paper or Scissors?")
+
+                    // clean player input to always be a capitalized string
+                    playerSelection = playerSelection.toLowerCase()
+                    playerSelection = playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1)
+                }
+                computerSelection = computerPlay(MIN, MAX)
+                console.log("Round " + i + ":\n" + playRound(playerSelection, computerSelection))
+                i++
+                rounds--
+            }
+            if (playerScore > computerScore) {
+                return "Game result:\nYou won the game with a score of " + playerScore + "-" + computerScore
+            } else if (playerScore < computerScore) {
+                return "Game result:\nYou lost the game with a score of " + playerScore + "-" + computerScore
+            } else {
+                return "Game result:\nThe game is a draw. Score: " + playerScore + "-" + computerScore
+            }
+        }
+
+        console.log(game())
+    </script>
+</body>
+</html>
