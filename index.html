@@ -4,104 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Rock-Paper-Scissors</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <title>Rock-Paper-Scissors ✊✋✌️</title>
 </head>
 <body>
-    <button id="Rock">Rock</button>
-    <button id="Paper">Paper</button>
-    <button id="Scissors">Scissors</button>
-    <button id="new-game">New Game</button>
-
-    <div id="rounds">Rounds played: 0</div>
-    <div id="player-score">Player: 0</div>
-    <div id="computer-score">Computer: 0</div>
-    <div id="draws">Draws: 0</div>
-
-    <script>
-        let playerScore = 0;
-        let computerScore = 0;
-        let draws = 0;
-        let rounds = 0;
-
-        // selects a random choice for the computer
-        function computerSelect() {
-            let choices = ["Rock", "Paper", "Scissors"]
-
-            return choices[Math.floor(Math.random() * 3)];
-        }
-
-        // compares player's choice and computer's choice and returns the winner
-        function getRoundWinner(playerSelection, computerSelection) {
-            if (playerSelection === computerSelection) {
-                return null;
-            } else if ((playerSelection === "Rock" && computerSelection === "Scissors")
-                || (playerSelection === "Paper" && computerSelection === "Rock")
-                || (playerSelection === "Scissors" && computerSelection === "paper")) {
-                return "Player";
-            } else {
-                return "Computer";
-            }
-        }
-
-        // plays a round
-        function playRound(e) {
-            playerSelection = e.target.id;
-
-            // resets all stats
-            if (playerSelection === "new-game") {
-                playerScore = 0;
-                computerScore = 0;
-                draws = 0;
-                rounds = 0;
-                document.querySelector("#player-score").textContent = `Player: ${playerScore}`;
-                document.querySelector("#computer-score").textContent = `Computer: ${computerScore}`;
-                document.querySelector("#draws").textContent = `Draws: ${draws}`;
-                document.querySelector("#rounds").textContent = `Rounds played: ${rounds}`;
-                alert("New game started.")
-                return;
-            }
-
-            // if the game is over, disable buttons and suggest to start a new game
-            if (playerScore >= 5 || computerScore >= 5) {
-                alert("The game is over, but you can choose to play a new game.");
-                return;
-            }
-
-            rounds++;
-            computerSelection = computerSelect();
-
-            winner = getRoundWinner(playerSelection, computerSelection);
-
-            if (winner === "Player") {
-                playerScore++;
-                alert(`Round ${rounds}:\n${winner} won the round! ${playerSelection} beats ${computerSelection}.`);
-                document.querySelector("#player-score").textContent = `Player: ${playerScore}`;
-            } else if (winner === "Computer") {
-                computerScore++;
-                alert(`Round ${rounds}:\n${winner} won the round! ${computerSelection} beats ${playerSelection}.`);
-                document.querySelector("#computer-score").textContent = `Computer: ${computerScore}`;
-            } else {
-                draws++;
-                alert(`Round ${rounds}:\nIt's a draw! Both chose ${computerSelection}.`)
-                document.querySelector("#draws").textContent = `Draws: ${draws}`;
-            }
-            document.querySelector("#rounds").textContent = `Rounds played: ${rounds}`;
-
-            if (playerScore === 5 || computerScore === 5) {
-                alert(`Game over!\n${winner} won 5 rounds.`);
-            }
-        }
-
-        // create nodelist of buttons
-        buttons = document.querySelectorAll("button");
-
-        // add event listeners to all buttons
-        buttons.forEach((button) => {
-            button.addEventListener("click", (e) => {
-                // play a round when any button was clicked
-                playRound(e);
-            });
-        });
-    </script>
+    <div class="selections">
+        <button class="selection" data-selection="rock">✊</button>
+        <button class="selection" data-selection="paper">✋</button>
+        <button class="selection" data-selection="scissors">✌️</button>
+    </div>
+    <div class="results">
+        <div>
+            You
+            <span class="result-score" data-your-score>0</span>
+        </div>
+        <div data-final-column>
+            PC
+            <span class="result-score" data-computer-score>0</span>
+        </div>
+        <!-- <div class="result-selection winner">✊</div>
+        <div class="result-selection">✌️</div> -->
+    </div>
 </body>
 </html>
